@@ -5,21 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Plantilla</title>
+    <style>
+        header{
+			position:relative;
+			margin:auto;
+			text-align:center;
+			padding:5px;	
+		}
+		
+		nav{
+			position:relative;
+			margin:auto;
+			width:100%;
+			height:auto;
+			background:black;
+		}
+
+		nav ul{
+			position:relative;
+			margin:auto;
+			width:50%;
+			text-align: center;
+		}
+
+		nav ul li{
+			display:inline-block;
+			width:24%;
+			line-height: 50px;
+			list-style: none;
+		}
+
+		nav ul li a{
+			color:white;
+			text-decoration: none;
+		}
+
+		section{
+			position:relative;
+			padding:20px;
+		}
+    </style>
 </head>
 <body>
-    <head>
+    <header>
         <h1>LOGOTIPO.</h1>
-    </head>
-    <nav>
-        <ul>
-            <li><a href="#">Inicio</a></li>
-            <li><a href="#">Nosotros</a></li>
-            <li><a href="#">Servicios</a></li>
-            <li><a href="#">Contacto</a></li>
-        </ul>
-    </nav>
+    </header>
+    <?php include 'modules/navegacion.php' ?>
     <section>
-        <h1>Página de INICIO.</h1>
+        <?php
+            $mvc = new MvcController();
+            $mvc->enlacesPaginasController();
+        ?>
     </section>
 </body>
 </html>
