@@ -17,6 +17,12 @@ class Paginas{
 		
 		}
 
+		else if($enlaces == "ok"){
+
+			$module =  "views/modules/registro.php";
+		
+		}
+
 		else{
 
 			$module =  "views/modules/registro.php";
