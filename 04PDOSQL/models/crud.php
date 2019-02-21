@@ -24,4 +24,25 @@ class Datos extends Conexion{
             return "error";
         }
     }
+
+    #INGRESO DE USUARIOS
+    public function ingresoUsuariosModel($datosModel, $tablaModel){
+        $statement = Conexion::conectar()->prepare("SELECT usuario, password FROM $tablaModel
+        WHERE usuario = :usuario AND password = :password");
+
+        $statement->bindParam(":usuario", $datosModel["usuario"], PDO::PARAM_STR);
+        $statement->bindParam(":password", $datosModel["password"], PDO::PARAM_STR);
+        $statement->execute();
+        //fetch(): Obtiene una fila de un conjunto de resultados asociado al objeto PDOStatement
+        return $statement->fetch();
+    }
+
+    #VISTA DE USUARIOS
+    public function vistaUsuariosModel($tablaModel){
+        $statement = Conexion::conectar()->prepare("SELECT * FROM $tablaModel");
+        $statement->execute();
+        //fetchAll(): Obtiene todas las filas de un conjunto de resultados
+        return $statement->fetchAll();
+    }
+
 }
