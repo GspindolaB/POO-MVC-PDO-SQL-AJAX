@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if(!$_SESSION['validar']){
+	header('Location: index.php?action=ingresar');
+	exit();//Se cierra el script despues de ejecutar el codigo
+}
+
+?>
+
 <h1>USUARIOS</h1>
 	<table border="1">		
 		<thead>			
@@ -14,7 +24,17 @@
 
 		$uusarios = new MvcController();
 		$uusarios -> vistaUsuarioController();
+		$uusarios -> eliminarUsuarioController();
 
 		?>
 		</tbody>
 	</table>
+<?php
+
+if(isset($_GET['action'])){
+	if($_GET['action'] == 'cambio'){
+		echo "Cambio realizado de manera correcta";
+	}
+}
+
+?>
