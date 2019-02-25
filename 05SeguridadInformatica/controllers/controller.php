@@ -36,6 +36,13 @@ class MvcController{
 	#REGISTRO DE USUARIOS
 	public function registroUsuarioController(){
 		if(isset($_POST['usuarioRegistro'])){
+
+			#preg_match = Realiza una comparación con una expresión regular.
+
+			if(preg_match('/^[a-zA-Z0-9]+$/',$_POST['usuarioRegistro']) 
+			&& preg_match('/^[a-zA-Z0-9]+$/',$_POST['passwordRegistro'])
+			&& preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/', $_POST['emailRegistro'])){
+
 			$tablaController = 'usuarios';
 			$datosController = array('usuario' => $_POST['usuarioRegistro'],
 					   			 'password' => $_POST['passwordRegistro'],
@@ -46,6 +53,7 @@ class MvcController{
 				header('Location: index.php?action=ok');
 			}else{
 				header('Location: index.php');
+				}
 			}
 		}		
 	}
@@ -53,6 +61,10 @@ class MvcController{
 	##IMGRESO DE USUARIOS
 	public function ingresoUsuarioController(){
 		if(isset($_POST['usuarioIngreso'])){
+
+			if(preg_match('/^[a-zA-Z0-9]+$/',$_POST['usuarioIngreso']) 
+			&& preg_match('/^[a-zA-Z0-9]+$/',$_POST['passwordIngreso'])){
+
 			$tablaController = 'usuarios';
 			$datosController = array('usuario' => $_POST['usuarioIngreso'],
 					   			 'password' => $_POST['passwordIngreso']);
@@ -65,6 +77,7 @@ class MvcController{
 				header('Location: index.php?action=usuarios');
 			}else{
 				header('Location: index.php?action=fallo');
+				}
 			}
 		}
 	}
@@ -103,6 +116,11 @@ class MvcController{
 	public function actualizarUsuarioController(){
 		$tablaController = 'usuarios';
 		if(isset($_POST['usuarioEditar'])){
+
+			if(preg_match('/^[a-zA-Z0-9]+$/',$_POST['usuarioRegistro']) 
+			&& preg_match('/^[a-zA-Z0-9]+$/',$_POST['passwordRegistro'])
+			&& preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/', $_POST['emailRegistro'])){
+
 			$datosController = array('id'=>$_POST['idEditar'],
 									'usuario'=>$_POST['usuarioEditar'],
 									'password'=>$_POST['passwordEditar'],
@@ -113,6 +131,7 @@ class MvcController{
 			header('Location: index.php?action=cambio');
 			}else{
 				echo "Error al actualizar los datos";
+				}
 			}
 		}
 	}
