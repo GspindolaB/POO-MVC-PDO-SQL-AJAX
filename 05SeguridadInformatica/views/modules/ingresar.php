@@ -21,6 +21,10 @@ if(isset($_GET['action'])){
 	if($_GET['action'] == 'fallo'){
 		echo "El usuario o password ingresado son incorrectos";
 	}
+
+	if($_GET['action'] == 'fallo3intentos'){
+		echo "Ha fallafo 3 veces para ingresar, por favor llene el captcha";
+	}
 }
 
 ?>

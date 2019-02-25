@@ -28,7 +28,7 @@ class Datos extends Conexion{
 
     #INGRESO DE USUARIOS
     public function ingresoUsuariosModel($datosModel, $tablaModel){
-        $statement = Conexion::conectar()->prepare("SELECT usuario, password FROM $tablaModel
+        $statement = Conexion::conectar()->prepare("SELECT usuario, password, Intentos FROM $tablaModel
         WHERE usuario = :usuario AND password = :password");
 
         $statement->bindParam(":usuario", $datosModel["usuario"], PDO::PARAM_STR);
@@ -37,6 +37,21 @@ class Datos extends Conexion{
         //fetch(): Obtiene una fila de un conjunto de resultados asociado al objeto PDOStatement
         return $statement->fetch();
         $statement->close();//Cerrar la conexion
+    }
+
+    #INTENTOS DE USUARIOS
+    public function intentosUsuariosModel($datosModel, $tablaModel){
+        $statement = Conexion::conectar()->prepare("UPDATE $tablaModel SET Intentos=:Intentos
+        WHERE usuario = :usuario");
+        $statement->bindParam(":Intentos", $datosModel["actualizarIntentos"], PDO::PARAM_INT);
+        $statement->bindParam(":usuario", $datosModel["usuarioActual"], PDO::PARAM_STR);
+
+        if($statement->execute()){
+            return "success";
+        }else{
+            return "error";
+        }
+        $statement->close();
     }
 
     #VISTA DE USUARIOS

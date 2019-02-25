@@ -76,13 +76,33 @@ class MvcController{
 					   			 'password' => $cifrar);
 		
 			$respuesta = Datos::ingresoUsuariosModel($datosController, $tablaController);
+
+			//Validar intentos
+			$intentos = $respuesta['Intentos'];
+			$usuario = $_POST['usuarioIngreso'];
+			$maxintentos = 2;
+
+			if($intentos < $maxintentos){
+
 			if($respuesta['usuario'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $cifrar){
 
 				session_start();//Se comienza una sesion
 				$_SESSION['validar'] = true;
+				$intentos = 0;
+				$datosController=array("usuarioActual"=>$usuario, "actualizarIntentos"=>$intentos);
+				$respuestaActualizarIntentos = Datos::intentosUsuariosModel($datosController, $tablaController);
 				header('Location: index.php?action=usuarios');
 			}else{
+				$intentos++;
+				$datosController=array("usuarioActual"=>$usuario, "actualizarIntentos"=>$intentos);
+				$respuestaActualizarIntentos = Datos::intentosUsuariosModel($datosController, $tablaController);
 				header('Location: index.php?action=fallo');
+					}
+				}else{
+					$intentos = 0;
+					$datosController=array("usuarioActual"=>$usuario, "actualizarIntentos"=>$intentos);
+					$respuestaActualizarIntentos = Datos::intentosUsuariosModel($datosController, $tablaController);
+					header('Location: index.php?action=fallo3intentos');
 				}
 			}
 		}
