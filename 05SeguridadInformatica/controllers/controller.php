@@ -43,9 +43,13 @@ class MvcController{
 			&& preg_match('/^[a-zA-Z0-9]+$/',$_POST['passwordRegistro'])
 			&& preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/', $_POST['emailRegistro'])){
 
+			#crypt(): devuelve el hash de 
+
+			$cifrar = crypt($_POST['passwordRegistro'], '$2a$09$anexamplestringforsalt$');
+
 			$tablaController = 'usuarios';
 			$datosController = array('usuario' => $_POST['usuarioRegistro'],
-					   			 'password' => $_POST['passwordRegistro'],
+					   			 'password' => $cifrar,
 					   	         'email' => $_POST['emailRegistro']);
 		
 			$respuesta = Datos::registroUsuariosModel($datosController, $tablaController);
@@ -65,12 +69,14 @@ class MvcController{
 			if(preg_match('/^[a-zA-Z0-9]+$/',$_POST['usuarioIngreso']) 
 			&& preg_match('/^[a-zA-Z0-9]+$/',$_POST['passwordIngreso'])){
 
+			$cifrar = crypt($_POST['passwordIngreso'], '$2a$09$anexamplestringforsalt$');
+
 			$tablaController = 'usuarios';
 			$datosController = array('usuario' => $_POST['usuarioIngreso'],
-					   			 'password' => $_POST['passwordIngreso']);
+					   			 'password' => $cifrar);
 		
 			$respuesta = Datos::ingresoUsuariosModel($datosController, $tablaController);
-			if($respuesta['usuario'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $_POST['passwordIngreso']){
+			if($respuesta['usuario'] == $_POST['usuarioIngreso'] && $respuesta['password'] == $cifrar){
 
 				session_start();//Se comienza una sesion
 				$_SESSION['validar'] = true;
@@ -121,9 +127,11 @@ class MvcController{
 			&& preg_match('/^[a-zA-Z0-9]+$/',$_POST['passwordRegistro'])
 			&& preg_match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/', $_POST['emailRegistro'])){
 
+			$cifrar = crypt($_POST['passwordEditar'], '$2a$09$anexamplestringforsalt$');
+
 			$datosController = array('id'=>$_POST['idEditar'],
 									'usuario'=>$_POST['usuarioEditar'],
-									'password'=>$_POST['passwordEditar'],
+									'password'=>$cifrar,
 									'email'=>$_POST['emailEditar']);
 		
 		$respuesta = Datos::actualizarUsuariosModel($datosController, $tablaController);
